@@ -1,4 +1,4 @@
-# **VLANs**
+﻿# **VLANs**
 
 - Routers operate at Layer 3 of the OSI stack
 - Hosts in separate IP subnets must send traffic via a router to communicate
@@ -6,12 +6,14 @@
 - Routers do not forward broadcast traffic by default
 - They provide performance and security by splitting networks into smaller domains at Layer 3
 
-
 - Switches operate at Layer 2 of the OSI stack
 - They do forward broadcast traffic by default
 - By default a campus switched network is one large broadcast domain
 - Switches flood broadcast traffic everywhere, including between different IP subnets
 - This raises performance and security concerns
+
+
+
 
 The Problem
 
@@ -26,35 +28,37 @@ Solution
 - VLANs segment the LAN into separate broadcast domains at Layer 2
 - There is typically a one-to-one relationship between an IP subnet and a VLAN
 
-# **VLAN Access Ports**
 
+# **VLAN Access Ports**
 - VLAN access ports are configured on switch interfaces where end hosts are plugged in
 - Access ports are configured with one specific VLAN
 - The configuration is all on the switch, the end host is not VLAN aware
 - Switches only allow traffic within the same VLAN
 
-_SW1(config)#vlan 10_
+*SW1(config)#vlan 10*
 
-_SW1(config-vlan)#name Eng_
+*SW1(config-vlan)#name Eng*
 
-_SW1(config)#interface FastEthernet 0/1_
+*SW1(config)#interface FastEthernet 0/1*
 
-_SW1(config-if)#switchport mode access_
+*SW1(config-if)#switchport mode access*
 
-_SW1(config-if)#switchport access vlan 10_
+*SW1(config-if)#switchport access vlan 10*
 
-_SW1(config)#interface range FastEthernet 0/3 - 5_
+*SW1(config)#interface range FastEthernet 0/3 - 5*
 
-_SW1(config-if)#switchport mode access_
+*SW1(config-if)#switchport mode access*
 
-_SW1(config-if)#switchport access vlan 10_
+*SW1(config-if)#switchport access vlan 10*
 
-_SW1#show vlan brief_
 
-_SW1#show interface FastEthernet 0/1 switchport_
+
+*SW1#show vlan brief*
+
+*SW1#show interface FastEthernet 0/1 switchport*
+
 
 # **VLAN Trunk Ports**
-
 - An access port carries traffic for one specific VLAN
 - Dot1Q trunks are configured on the links between switches where we need to carry traffic for multiple VLANs
 - ISL (Inter-Switch Link) was a Cisco proprietary trunking protocol which is now obsolete
@@ -64,19 +68,20 @@ _SW1#show interface FastEthernet 0/1 switchport_
 
 Trunk Port Configuration
 
-_SW1(config)#interface FastEthernet 0/24_
+*SW1(config)#interface FastEthernet 0/24*
 
-_SW1(config-interface)#description Trunk to SW2_
+*SW1(config-interface)#description Trunk to SW2*
 
-_SW1(config-interface)#switchport trunk encapsulation dot1q_
+*SW1(config-interface)#switchport trunk encapsulation dot1q*
 
-_SW1(config-interface)#switchport mode trunk_
+*SW1(config-interface)#switchport mode trunk*
 
 Allowed VLAN Configuration
 
-_SW1(config)#interface GigabitEthernet 0/1_
+*SW1(config)#interface GigabitEthernet 0/1*
 
-_SW1(config-if)#switchport trunk allowed vlan 10,30_
+*SW1(config-if)#switchport trunk allowed vlan 10,30*
+
 
 Hypervisors - VLAN Aware Hosts
 
@@ -84,17 +89,19 @@ Hypervisors - VLAN Aware Hosts
 - A special case is virtualized hosts, where there are virtual machines in different IP subnets on the host
 - In this case we need to trunk the VLANs down to the host
 
+
 Voice VLAN Configuration
 
-_SW1(config)#interface FastEthernet 0/10_
+*SW1(config)#interface FastEthernet 0/10*
 
-_SW1(config-interface)#description IP Phone_
+*SW1(config-interface)#description IP Phone*
 
-_SW1(config-interface)#switchport mode access_
+*SW1(config-interface)#switchport mode access*
 
-_SW1(config-interface)#switchport access vlan 10_
+*SW1(config-interface)#switchport access vlan 10*
 
-_SW1(config-interface)#switchport voice vlan 20_
+*SW1(config-interface)#switchport voice vlan 20*
+
 
 The Native VLAN
 
@@ -107,38 +114,38 @@ The Native VLAN
 
 Native VLAN Configuration
 
-_SW1(config)#vlan 199_
+*SW1(config)#vlan 199*
 
-_SW1(config-vlan)#name Native_
+*SW1(config-vlan)#name Native*
 
-_SW1(config)#interface GigabitEthernet 0/1_
+*SW1(config)#interface GigabitEthernet 0/1*
 
-_SW1(config-interface)#description Trunk to SW2_
+*SW1(config-interface)#description Trunk to SW2*
 
-_SW1(config-interface)#switchport trunk encapsulation dot1q_
+*SW1(config-interface)#switchport trunk encapsulation dot1q*
 
-_SW1(config-interface)#switchport mode trunk_
+*SW1(config-interface)#switchport mode trunk*
 
-_SW1(config-interface)#switchport trunk native vlan 199_
+*SW1(config-interface)#switchport trunk native vlan 199*
 
-_SW1#show interface gig0/1 switchport_
+*SW1#show interface gig0/1 switchport*
+
 
 # **Dynamic Trunking Protocol DTP**
-
 DTP configuration:
 
-- _Switchport mode dynamic auto_: will form a trunk if the neighbour switch port is set to trunk or desirable. Trunk will not be formed if both sides are set to auto. Default on newer switches.
-- _Switchport mode dynamic desirable_: will form a trunk if the neighbour switch port is set to trunk, desirable or auto. Default on older switches.
-- _Switchport nonegotiate_: disables DTP
+- *Switchport mode dynamic auto*: will form a trunk if the neighbour switch port is set to trunk or desirable. Trunk will not be formed if both sides are set to auto. Default on newer switches.
+- *Switchport mode dynamic desirable*: will form a trunk if the neighbour switch port is set to trunk, desirable or auto. Default on older switches.
+- *Switchport nonegotiate*: disables DTP
 
 It is however recommended to manually configure switch ports
 
 - Manual configuration:
-  - _switchport mode access_
-  - _switchport mode trunk_
+  - *switchport mode access*
+  - *switchport mode trunk*
+
 
 # **VLAN Trunking Protocol VTP**
-
 - The VLAN Trunking Protocol (VTP) allows you to add, edit or delete VLANs on switches configured as VTP Servers, and have other switches configured as VTP Clients synchronise their VLAN database with them
 - This can be convenient if you manage a large campus
 - You will still need to perform port level VLAN configuration on the switches
@@ -149,125 +156,132 @@ VTP Modes
 - VTP Client: Cannot add, edit or delete VLANs. A VTP Client will synchronise its VLAN database from the Server with the highest revision number.
 - VTP Transparent: Does not participate in the VTP domain. Does not advertise or learn VLAN information but will pass it on. Can add, edit or delete VLANs in its own local VLAN database.
 
-_SW1(config)#vtp domain Flackbox_
+*SW1(config)#vtp domain Flackbox*
 
-_SW1(config)#vtp mode server_
-
-or
-
-_SW1(config)#vtp mode client_
+*SW1(config)#vtp mode server*
 
 or
 
-_SW1(config)#vtp mode transparent_
+*SW1(config)#vtp mode client*
 
-_SW1(config)#vlan 20_
+or
 
-_SW1(config-vlan)#name sales_
+*SW1(config)#vtp mode transparent*
+
+*SW1(config)#vlan 20*
+
+*SW1(config-vlan)#name sales*
 
 (Cannot add VLAN if VTP Client)
 
-_SW1#show vtp status_
+*SW1#show vtp status*
+
+
 
 # **Inter-VLAN Routing**
-
 1. Router with separate interfaces
-2. Router on a stick
-3. Layer 3 switch
+1. Router on a stick
+1. Layer 3 switch
+
 
 ## **VLANs and IP subnets in the LAN**
-
 - There is typically a one-to-one relationship between an IP subnet and a VLAN in the LAN campus
 - For example Engineering hosts are in IP subnet 10.10.10.0/24 and VLAN 10, and Sales hosts are in IP subnet 10.10.20.0/24 and VLAN 20
 - Hosts are segregated at Layer 3 by being in different IP subnets, and at Layer 2 by being in different VLANs
 - Hosts in different IP subnets need to send traffic via a router to communicate with each other
 
-_R1(config)#interface FastEthernet 0/1_
+*R1(config)#interface FastEthernet 0/1*
 
-_R1(config-interface)#ip address 10.10.10.1 255.255.255.0_
+*R1(config-interface)#ip address 10.10.10.1 255.255.255.0*
 
-_R1(config)#interface FastEthernet 0/2_
+*R1(config)#interface FastEthernet 0/2*
 
-_R1(config-interface)#ip address 10.10.20.1 255.255.255.0_
+*R1(config-interface)#ip address 10.10.20.1 255.255.255.0*
 
-_R1(config)#ip route 0.0.0.0 0.0.0.0 203.0.113.2_
+*R1(config)#ip route 0.0.0.0 0.0.0.0 203.0.113.2*
 
-_SW1(config)#interface FastEthernet 0/1_
 
-_SW1(config-if)#switchport mode access_
+*SW1(config)#interface FastEthernet 0/1*
 
-_SW1(config-if)#switchport access vlan 10_
+*SW1(config-if)#switchport mode access*
 
-_SW1(config)#interface FastEthernet 0/2_
+*SW1(config-if)#switchport access vlan 10*
 
-_SW1(config-if)#switchport mode access_
+*SW1(config)#interface FastEthernet 0/2*
 
-_SW1(config-if)#switchport access vlan 20_
+*SW1(config-if)#switchport mode access*
+
+*SW1(config-if)#switchport access vlan 20*
+
 
 ## **Router on a Stick**
-
-- You do not need a separate physical interface for every VLAN – you are less likely to run out of interfaces
+- You  do not need a separate physical interface for every VLAN – you are less likely to run out of interfaces
 - Traffic being routed within the campus has to go up and down the same physical Ethernet cable to the router – there is more contention for bandwidth than when using separate interfaces
 
-_R1(config)#interface FastEthernet 0/1_
+*R1(config)#interface FastEthernet 0/1*
 
-_R1(config-interface)#no ip address_
+*R1(config-interface)#no ip address*
 
-_R1(config-interface)#no shutdown_
+*R1(config-interface)#no shutdown*
 
-_R1(config)#interface FastEthernet 0/1.10_
+*R1(config)#interface FastEthernet 0/1.10*
 
-_R1(config-interface)#encapsulation dot1q 10_
+*R1(config-interface)#encapsulation dot1q 10*
 
-_R1(config-interface)#ip address 10.10.10.1 255.255.255.0_
+*R1(config-interface)#ip address 10.10.10.1 255.255.255.0*
 
-_R1(config)#interface FastEthernet 0/1.20_
+*R1(config)#interface FastEthernet 0/1.20*
 
-_R1(config-interface)#encapsulation dot1q 20_
+*R1(config-interface)#encapsulation dot1q 20*
 
-_R1(config-interface)#ip address 10.10.20.1 255.255.255.0_
+*R1(config-interface)#ip address 10.10.20.1 255.255.255.0*
 
-_R1(config)#ip route 0.0.0.0 0.0.0.0 203.0.113.2_
+*R1(config)#ip route 0.0.0.0 0.0.0.0 203.0.113.2*
 
-_SW1(config)#interface FastEthernet 0/1_
 
-_SW1(config-if)#switchport mode trunk_
+*SW1(config)#interface FastEthernet 0/1*
+
+*SW1(config-if)#switchport mode trunk*
+
 
 ## **Layer 3 Switch**
-
 - Traffic being routed within the campus is routed across the switch backplane, it does not need to travel over physical cables to an external router
 - You may still need an external router for WAN connectivity and services
 
 Inter-VLAN Routing Configuration
 
-_SW1(config)#ip routing_
+*SW1(config)#ip routing*
 
-_SW1(config)#interface vlan 10_
+*SW1(config)#interface vlan 10*
 
-_SW1(config-if)#ip address 10.10.10.1 255.255.255.0_
+*SW1(config-if)#ip address 10.10.10.1 255.255.255.0*
 
-_SW1(config)#interface vlan 20_
+*SW1(config)#interface vlan 20*
 
-_SW1(config-if)#ip address 10.10.20.1 255.255.255.0_
+*SW1(config-if)#ip address 10.10.20.1 255.255.255.0*
 
 WAN Routing Configuration
 
-_SW1(config)#interface FastEthernet 0/1_
+*SW1(config)#interface FastEthernet 0/1*
 
-_SW1(config-if)#no switchport_
+*SW1(config-if)#no switchport*
 
-_SW1(config-if)#ip address 10.10.100.1 255.255.255.0_
+*SW1(config-if)#ip address 10.10.100.1 255.255.255.0*
 
-_SW1(config)#ip route 0.0.0.0 0.0.0.0 10.10.100.2_
+*SW1(config)#ip route 0.0.0.0 0.0.0.0 10.10.100.2*
 
-_R1(config)#interface FastEthernet 0/1_
 
-_R1(config-interface)#ip address 10.10.100.2 255.255.255.0_
+*R1(config)#interface FastEthernet 0/1*
 
-_R1(config)#interface FastEthernet 0/2_
+*R1(config-interface)#ip address 10.10.100.2 255.255.255.0*
 
-_R1(config-interface)#ip address 203.0.113.1 255.255.255.0_
+*R1(config)#interface FastEthernet 0/2*
 
-_R1(config)#ip route 0.0.0.0 0.0.0.0 203.0.113.2_
+*R1(config-interface)#ip address 203.0.113.1 255.255.255.0*
 
-_R1(config)#ip route 10.10.0.0 255.255.0.0 10.10.100.1_
+*R1(config)#ip route 0.0.0.0 0.0.0.0 203.0.113.2*
+
+*R1(config)#ip route 10.10.0.0 255.255.0.0 10.10.100.1*
+
+
+

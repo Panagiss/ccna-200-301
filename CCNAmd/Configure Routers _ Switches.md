@@ -201,7 +201,7 @@ Default gateway - *ip route 0.0.0.0 0.0.0.0 ADDRESS*
 
 
 # Dynamic Routing Protocols Types
-
+![](images/Configure_Routers-Switches/Aspose.Words.aefc82de-89dd-4d92-b629-9ac282c9f800.001.png)
 
 **Routing protocols can be split into two main types**:
 
@@ -346,7 +346,7 @@ EIGRP Verification:
 *R2#show ip eigrp neighbors*
 
 
-
+![](images/Configure_Routers-Switches/Aspose.Words.aefc82de-89dd-4d92-b629-9ac282c9f800.002.png)
 
 
 
