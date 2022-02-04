@@ -7,4 +7,4 @@ These Notes were taken during studying **Neil Anderson's** course on [Udemy](htt
 
 Also you can find his course for free in his [YouTube channel](https://www.youtube.com/playlist?list=PLoL3y5BaIvw2heBYZd0MSUDsDtZRmbKJa)
 
-All files are in *docx* format. I have converted few in *md*. If you want to make them all *md*, **ping** me. I have made an inbound allow ACL just for that ;)
+All files come in multiple formats. After requests I have added *pdf* and *md* appart from *docx*. If you want any other formats or any other request, **ping** me. I have made an inbound allow ACL just for that ;)
