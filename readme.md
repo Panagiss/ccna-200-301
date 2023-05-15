@@ -39,7 +39,7 @@ After request I provide with the **advised** order of studying the mentioned top
 
 ## Subnetting
 
-Subnetting is essential for passing the CCNA. I haven't put any resources about it and so I will provide some useful ones that I read. These helped me understand it as well as practice and eventually master the topic:
+Subnetting is essential for passing the CCNA. I haven't put any resources about it, so I will provide some useful ones that I read. These helped me understand it as well as practice and eventually master the topic:
 
 - Neil's free YT videos starting from [No 36](https://youtu.be/25JSoskhORM) on the playlist and finishing on [No 47](https://youtu.be/FQ7zQtMYkaM) for understanding subnetting
 - [Practice subnetting](https://subnettingpractice.com/)
